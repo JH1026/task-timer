@@ -1,10 +1,11 @@
+import Title from "../generic/Title";
 
 
 const SelectTasks = () => {
 
   return (
     <>
-      未選択  英語　docker IT 掃除
+      <Title link="/tasks">Tasks</Title>
     </>
   );
 };

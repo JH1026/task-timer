@@ -14,7 +14,8 @@ const CommonLayout = () => {
         width: '1024px',
         background: '#11a',
         minHeight: '100vh',
-        flexGrow: 1,     
+        flexGrow: 1,
+        display: 'flex',
       }}>
         <Outlet />
       </div>

@@ -1,11 +1,19 @@
+import { css } from "@emotion/react";
 
 const Timer = () => {
 
   return (
-    <>
-      00:00:00
-    </>
+    <main css={timer}>
+      <div>00:10:05</div>
+    </main>
   );
 }
 
 export default Timer;
+
+const timer = css`
+  display: flex;
+  justify-content: center;
+
+  font-size: 100px;
+`
