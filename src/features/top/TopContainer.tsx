@@ -1,25 +1,28 @@
 import { css } from '@emotion/react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { editTitle } from '../../utils/editTitle';
+import { timeStrToSeconds, timStrToNumbers } from '../../utils/calcTime';
 import SelectTasks from "./SelectTasks";
 import SelectTimes from "./SelectTimes";
 import SelectVolume from "./SelectVolume";
 import Timer from "./Timer"
 
 const TopContainer = () => {
-  const [leftTime, setLeftTme] = useState<number>(0);
+  const [leftTime, setLeftTime] = useState<number>(0);
+
+  const [started, setStarted] = useState<boolean>(false);
   const [stopped, setStopped] = useState<boolean>(false);
   const stopRef = useRef(stopped);
   stopRef.current = stopped;
 
   useEffect(() => {
-    if (!stopped && leftTime > 0) {
+    if (started && !stopped && leftTime > 0) {
       countDownTime(leftTime);
     }
   }, [stopped]);
   
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === ' ') {
+    if (event.key === 's') {
       setStopped((current) => {
         return !current;
       });
@@ -35,7 +38,7 @@ const TopContainer = () => {
       return;
     }
     
-    setLeftTme(seconds);
+    setLeftTime(seconds);
 
     if (seconds > 0) {
       setTimeout(() => {
@@ -50,28 +53,63 @@ const TopContainer = () => {
     }, 10);
   }
 
-  const startTimer = (time: string) => {
-    if (leftTime > 0) {
+  const selectTimer = useCallback((time: string) => {
+    if (started) {
       return;
     }
-    const [h, m, s] = time.split(":").map(item => Number(item));
-    countDownTime(h*60*60+m*60+s);
-  }
+    setStarted(true);
+    setLeftTime(timeStrToSeconds(time));
+    setStopped(true);
+  }, [started, timeStrToSeconds, setLeftTime, setStarted, setStopped]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flexGrow: '1' }}>
       <div css={upSide}>
-        <Timer stopped={stopped} leftTime={leftTime} />
+        <Timer
+          stopped={stopped}
+          leftTime={leftTime}
+        />
+        <div style={{
+          marginBottom: '16px',
+          width: '250px',
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}>
+          {started && (
+            <button css={timerButton} onClick={() => {
+              setStopped((current) => !current);
+            }}>
+              {stopped ? 'Timer Start' : 'Timer Stop'}
+            </button>
+          )}
+          {started && (
+            <button css={timerButton} onClick={() => {
+              const result = window.confirm("タイマーをリセットしますか？");
+              if (!result) {
+                return;
+              }
+              setStopped(true);
+              setStarted(false);
+              setLeftTime(0);
+            }}>
+              Timer Reset
+            </button>
+          )}
+        </div>
         <SelectVolume />
       </div>
       <div style={{ display: 'flex', flexGrow: 1, paddingLeft: '12px' }}>
         <div css={leftSide}>
           <div style={{ flexGrow: 1 }}>
-            <SelectTasks />
+            <SelectTasks
+              onSelectTask={(task: Task) => {
+                selectTimer(task.defaultTime);
+              }}
+            />
           </div>
         </div>
         <div>
-          <SelectTimes startTimer={startTimer}/>
+          <SelectTimes startTimer={selectTimer}/>
         </div>
       </div>
     </div>
@@ -79,8 +117,12 @@ const TopContainer = () => {
 };
 
 const upSide = css`
-  height: 200px;
+  height: 225px;
   flex-grow: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
 `
 
 const leftSide = css`
@@ -89,5 +131,17 @@ const leftSide = css`
   flex-direction: column;
 `
 
+const timerButton = css`
+  border: none;
+  width: 120px;
+  padding: 8px;
+
+  font-size: 16px;
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
+`
 
 export default TopContainer;

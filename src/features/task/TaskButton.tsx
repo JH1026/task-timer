@@ -2,12 +2,14 @@ import { css } from "@emotion/react";
 
 type Props = {
   task: Task;
+  selected: boolean;
   onSelectTask: (task: Task) => void;
 }
 
 const TaskButton = ({
   task,
-  onSelectTask
+  selected,
+  onSelectTask,
 }: Props) => {
 
   return (
@@ -15,7 +17,7 @@ const TaskButton = ({
       onClick={() => {
         onSelectTask(task);
       }} 
-      css={ButtonStyle(task.color)}>
+      css={ButtonStyle(selected, task.color)}>
       {task.name}
     </button>
   );
@@ -23,17 +25,18 @@ const TaskButton = ({
 
 export default TaskButton;
 
-const ButtonStyle = (color: string) => css`
-  border: none;
+const ButtonStyle = (selected:boolean, color: string) => css`
   background: ${color};
 
   width: 180px;
-  color: white;
+  color: #eee;
   font-size: 20px;
   padding: 4px;
 
   cursor: pointer;
 
+  box-sizing: border-box;
+  border: ${selected ? '2px solid #fff' : 'none'}; 
   :hover {
     opacity: 0.9;
   }

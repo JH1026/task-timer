@@ -1,13 +1,19 @@
+import { useCallback, useState } from "react";
 import { useAsync } from "react-use";
 import Title from "../generic/Title";
 import { defaultTasks } from "../task/deafultTask";
 import TaskButton from "../task/TaskButton";
 
+type Props = {
+  onSelectTask: (task: Task) => void;
+}
 
-const SelectTasks = () => {
+const SelectTasks = ({
+  onSelectTask,
+}: Props) => {
+  const [selectedTask, selectTask] = useState<Task>();
 
   const { value: tasks, loading } = useAsync(async () => {
-    
     
     return defaultTasks;
   });
@@ -22,7 +28,15 @@ const SelectTasks = () => {
       }}>
         {tasks?.map((task) => {
           return (
-            <TaskButton key={task.name} task={task} />
+            <TaskButton
+              selected={!!selectedTask && task.name === selectedTask.name}
+              key={task.name}
+              task={task}
+              onSelectTask={() => {
+                selectTask(task);
+                onSelectTask(task);
+              }}
+            />
           )
         })}
       </div>

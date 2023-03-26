@@ -1,23 +1,28 @@
 
 export const defaultTasks: Task[] = [
   {
-    name: '掃除',
-    defaultTime: '00:07:30',
+    name: '読書',
+    defaultTime: '00:30:00',
     color: '#00f',
   },
   {
-    name: '英語読書',
-    defaultTime: '00:10:00',
-    color: '#0f0',
+    name: '開発',
+    defaultTime: '00:45:00',
+    color: '#0cc',
   },
   {
-    name: '読書',
-    defaultTime: '00:10:00',
-    color: '#f00',
+    name: '記事読み書き',
+    defaultTime: '00:45:00',
+    color: '#c0c',
   },
   {
-    name: '映画・ドラマ鑑賞',
-    defaultTime: '00:20:00',
-    color: '#f0f',
+    name: 'アルゴリズム',
+    defaultTime: '00:45:00',
+    color: '#cc0',
+  },
+  {
+    name: '知識整理',
+    defaultTime: '00:30:00',
+    color: '#c00',
   },
 ];
