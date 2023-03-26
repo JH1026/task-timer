@@ -28,8 +28,7 @@ const TopContainer = () => {
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown, false)
-  }, [])
-
+  }, []);
 
   const countDownTime = (seconds: number) => {
     if (stopRef.current) {
@@ -71,7 +70,7 @@ const TopContainer = () => {
             <SelectTasks />
           </div>
         </div>
-        <div css={rightSide}>
+        <div>
           <SelectTimes startTimer={startTimer}/>
         </div>
       </div>
@@ -85,13 +84,10 @@ const upSide = css`
 `
 
 const leftSide = css`
-  width: 200px;
+  width: 400px;
   display: flex;
   flex-direction: column;
 `
 
-const rightSide = css`
-  
-`
 
 export default TopContainer;
