@@ -20,7 +20,7 @@ const SelectTasks = ({
 
   return (
     <>
-      <Title link="/tasks">Tasks</Title>
+      <Title>タスク一覧</Title>
       <div style={{
         display: 'flex',
         flexDirection: 'column',

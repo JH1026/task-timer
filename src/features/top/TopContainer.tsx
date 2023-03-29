@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { editTitle } from '../../utils/editTitle';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { timeStrToSeconds, timStrToNumbers } from '../../utils/calcTime';
 import SelectTasks from "./SelectTasks";
 import SelectTimes from "./SelectTimes";
@@ -8,6 +8,7 @@ import SelectVolume from "./SelectVolume";
 import Timer from "./Timer"
 
 const TopContainer = () => {
+  const navigate = useNavigate();
   const [leftTime, setLeftTime] = useState<number>(0);
 
   const [started, setStarted] = useState<boolean>(false);
@@ -64,6 +65,9 @@ const TopContainer = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', flexGrow: '1' }}>
+      <button onClick={() => navigate('/task-config')} css={config}>
+        タスク設定
+      </button>
       <div css={upSide}>
         <Timer
           stopped={stopped}
@@ -137,6 +141,23 @@ const timerButton = css`
   padding: 8px;
 
   font-size: 16px;
+  cursor: pointer;
+
+  :hover {
+    opacity: 0.8;
+  }
+`
+
+const config = css`
+  position: absolute;
+  
+  background: #999;
+  color: #fff;
+  border: none;
+
+  width: 150px;
+  padding: 4px;
+
   cursor: pointer;
 
   :hover {

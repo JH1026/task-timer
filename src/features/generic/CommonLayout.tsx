@@ -1,22 +1,11 @@
+import { css } from "@emotion/react";
 import { Outlet } from "react-router-dom"
 
 const CommonLayout = () => {
 
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minWidth: '1024px',
-      flexDirection: 'column',
-    }}>
-      <div style={{
-        width: '1024px',
-        background: '#11a',
-        minHeight: '100vh',
-        flexGrow: 1,
-        display: 'flex',
-      }}>
+    <div css={commonLayoutRoot}>
+      <div css={commonLayoutMainContent}>
         <Outlet />
       </div>
     </div>
@@ -24,3 +13,19 @@ const CommonLayout = () => {
 };
 
 export default CommonLayout;
+
+export const commonLayoutRoot = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 1024px;
+  flex-direction: column;
+`
+
+export const commonLayoutMainContent = css`
+  width: 1024px;
+  background: #11a;
+  min-height: 100vh;
+  flex-grow: 1;
+  display: flex;
+`
