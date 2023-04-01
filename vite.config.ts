@@ -12,6 +12,6 @@ export default defineConfig({
   },
   build: {
     outDir: 'docs',
-    assetsDir: 'task-timier/assets',
+    assetsDir: 'task-timer/assets',
   }
 })
