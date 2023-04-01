@@ -10,4 +10,7 @@ export default defineConfig({
     jsxFactory: 'jsx',
     // jsxInject: `import { jsx } from '@emotion/react'`
   },
+  build: {
+    outDir: 'docs',
+  }
 })
