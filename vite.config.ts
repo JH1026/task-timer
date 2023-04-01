@@ -10,7 +10,7 @@ export default defineConfig({
     jsxFactory: 'jsx',
     // jsxInject: `import { jsx } from '@emotion/react'`
   },
-  base: 'task-timer',
+  // base: 'task-timer',
   build: {
     outDir: 'docs',
     assetsDir: '',
