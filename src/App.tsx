@@ -15,7 +15,7 @@ function App() {
         </Route>
         <Route element={<TaskLayout />} >
           <Route path="/task-config" element={<TaskConfigPage />} />
-          <Route path="/task-schedule" element={<TopPage />} />
+          <Route path="/task-record" element={<TopPage />} />
           <Route path="/task-stats" element={<TopPage />} />
         </Route>
       </Routes>

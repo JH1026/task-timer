@@ -12,13 +12,13 @@ const TaskHeader = () => {
         <li onClick={() => navigate('/')}>
           Top
         </li>
-        <li onClick={() => navigate('/')}>
+        <li onClick={() => navigate('/task-config')}>
           タスク作成
         </li>
-        <li onClick={() => navigate('/')}>
+        <li onClick={() => navigate('/task-record')}>
           タスク実績
         </li>
-        <li onClick={() => navigate('/')}>
+        <li onClick={() => navigate('/task-stats')}>
           タスク統計
         </li>
       </ul>

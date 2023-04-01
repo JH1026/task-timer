@@ -3,7 +3,7 @@ import { css } from "@emotion/react";
 type Props = {
   task: Task;
   selected: boolean;
-  onSelectTask: (task: Task) => void;
+  onSelectTask?: (task: Task) => void;
 }
 
 const TaskButton = ({
@@ -15,7 +15,7 @@ const TaskButton = ({
   return (
     <button
       onClick={() => {
-        onSelectTask(task);
+        onSelectTask && onSelectTask(task);
       }} 
       css={ButtonStyle(selected, task.color)}>
       {task.name}
