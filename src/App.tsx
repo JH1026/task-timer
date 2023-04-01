@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<CommonLayout />} >
-          <Route path="/" element={<TopPage />} />
+          <Route path="/task-timer" element={<TopPage />} />
         </Route>
         <Route element={<TaskLayout />} >
           <Route path="/task-config" element={<TaskConfigPage />} />

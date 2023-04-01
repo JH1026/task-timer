@@ -9,7 +9,7 @@ const TaskHeader = () => {
       display: 'block'
     }}>
       <ul css={headerContainer}>
-        <li onClick={() => navigate('/')}>
+        <li onClick={() => navigate('/task-timer')}>
           Top
         </li>
         <li onClick={() => navigate('/task-config')}>
