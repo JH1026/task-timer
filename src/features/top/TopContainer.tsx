@@ -1,7 +1,8 @@
 import { css } from '@emotion/react';
+import alarm from '../../assets/birds.mp3';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { timeStrToSeconds, timStrToNumbers } from '../../utils/calcTime';
+import { useNavigate } from 'react-router-dom';
+import { timeStrToSeconds } from '../../utils/calcTime';
 import SelectTasks from "./SelectTasks";
 import SelectTimes from "./SelectTimes";
 import SelectVolume from "./SelectVolume";
@@ -9,12 +10,19 @@ import Timer from "./Timer"
 
 const TopContainer = () => {
   const navigate = useNavigate();
+  const audioRef = useRef<HTMLAudioElement>();
+  
   const [leftTime, setLeftTime] = useState<number>(0);
 
   const [started, setStarted] = useState<boolean>(false);
   const [stopped, setStopped] = useState<boolean>(false);
   const stopRef = useRef(stopped);
   stopRef.current = stopped;
+
+  useEffect(() => {
+    audioRef.current = new Audio(alarm);
+    document.addEventListener('keydown', handleKeyDown, false)
+  }, []);
 
   useEffect(() => {
     if (started && !stopped && leftTime > 0) {
@@ -30,10 +38,6 @@ const TopContainer = () => {
     }
   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown, false)
-  }, []);
-
   const countDownTime = (seconds: number) => {
     if (stopRef.current) {
       return;
@@ -45,10 +49,12 @@ const TopContainer = () => {
       setTimeout(() => {
         countDownTime(seconds - 1);
       }, 1000);
-  
+
       return;
     }
-    
+
+    audioRef?.current?.play();
+    setStarted(false);
     setTimeout(() => {
       alert("時間になりました！");
     }, 10);
@@ -58,6 +64,8 @@ const TopContainer = () => {
     if (started) {
       return;
     }
+
+    audioRef?.current?.pause();
     setStarted(true);
     setLeftTime(timeStrToSeconds(time));
     setStopped(true);
@@ -92,6 +100,7 @@ const TopContainer = () => {
               if (!result) {
                 return;
               }
+              audioRef?.current?.pause();
               setStopped(true);
               setStarted(false);
               setLeftTime(0);
@@ -100,7 +109,13 @@ const TopContainer = () => {
             </button>
           )}
         </div>
-        <SelectVolume />
+        <SelectVolume
+          onChangeVolumeSize={(size: number) => {
+            if (!audioRef?.current) return; 
+            
+            audioRef.current.volume = size;
+          }}
+        />
       </div>
       <div style={{ display: 'flex', flexGrow: 1, paddingLeft: '12px' }}>
         <div css={leftSide}>
