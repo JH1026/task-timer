@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import alarm from '../../assets/birds.mp3';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { timeStrToSeconds } from '../../utils/calcTime';
 import SelectTasks from "./SelectTasks";
@@ -25,7 +25,8 @@ const TopContainer = () => {
   }, []);
 
   useEffect(() => {
-    if (started && !stopped && leftTime > 0) {
+    if (!stopped && leftTime > 0) {
+      setStarted(true);
       countDownTime(leftTime);
     }
   }, [stopped]);
@@ -66,7 +67,6 @@ const TopContainer = () => {
     }
 
     audioRef?.current?.pause();
-    setStarted(true);
     setLeftTime(timeStrToSeconds(time));
     setStopped(true);
   }, [started, timeStrToSeconds, setLeftTime, setStarted, setStopped]);
@@ -87,14 +87,14 @@ const TopContainer = () => {
           display: 'flex',
           justifyContent: 'space-between'
         }}>
-          {started && (
+          {leftTime > 0 && (
             <button css={timerButton} onClick={() => {
               setStopped((current) => !current);
             }}>
               {stopped ? 'Timer Start' : 'Timer Stop'}
             </button>
           )}
-          {started && (
+          {leftTime > 0 && (
             <button css={timerButton} onClick={() => {
               const result = window.confirm("タイマーをリセットしますか？");
               if (!result) {
