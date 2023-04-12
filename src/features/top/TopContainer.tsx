@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
-import alarm from '../../assets/birds.mp3';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { alarm } from '../../utils/birds';
 import { timeStrToSeconds } from '../../utils/calcTime';
 import SelectTasks from "./SelectTasks";
 import SelectTimes from "./SelectTimes";
@@ -20,7 +20,7 @@ const TopContainer = () => {
   stopRef.current = stopped;
 
   useEffect(() => {
-    audioRef.current = new Audio(alarm);
+    audioRef.current = new Audio("data:audio/wav;base64," + alarm);
     document.addEventListener('keydown', handleKeyDown, false)
   }, []);
 
